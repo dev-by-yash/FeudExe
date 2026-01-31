@@ -1,0 +1,45 @@
+.border{
+padding: 6px;
+border-radius: 22px;
+
+background: #F51BAD;
+box-shadow: 0 0 13.6px 0 #FFF inset, 0 0 20px 0 rgba(255, 255, 255, 0.50);
+}
+
+.optioncard {
+  width: 360px;
+  height: 70px;
+
+  background: linear-gradient(90deg, #ff2fbf 0%, #c81dff 100%);
+  border-radius: 18px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow:
+    inset 0 0 6px rgba(255, 255, 255, 0.35);
+}
+
+.circle{
+    width: 55px;
+  height: 55px;
+
+  border-radius: 50%;
+  background: linear-gradient(180deg, #4f6cff, #3a4cff);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow:
+    0 0 10px rgba(120, 140, 255, 0.9),
+    inset 0 0 6px rgba(255, 255, 255, 0.6);
+}
+
+.circleText {
+  font-family: "Roslindale", serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #ffffff;
+}

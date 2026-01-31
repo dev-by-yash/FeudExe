@@ -1,0 +1,30 @@
+.border {
+display: flex;
+padding: 4px;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 2.0625rem;
+border-radius: 1.5rem;
+background: #F51BAD;
+box-shadow: 0 0 13.6px 0 #FFF inset, 0 0 20px 0 rgba(255, 255, 255, 0.50);
+}
+.timer{
+    display: flex;
+padding: 15px 30px;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 0.625rem;
+
+border-radius: 1.25rem;
+background: #1B59F5;
+box-shadow: 0 0 6.6px 3px rgba(255, 153, 221, 0.50) inset, 0 0 4px 0 rgba(255, 255, 255, 0.25), 0 0 10.2px 0 rgba(255, 255, 255, 0.25);
+color: #FFF;
+text-align: center;
+font-family: Roslindale;
+font-size: 3.25rem;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}

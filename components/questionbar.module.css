@@ -1,0 +1,37 @@
+
+.border{
+display: inline-flex;
+padding: 4pxa;
+border-radius: 1.5rem;
+background: #F51BAD;
+border-radius: 1.75rem;
+border: 3px solid #ff4ecd;
+box-shadow:
+    0 0 18px rgba(255, 77, 205, 0.9),
+    inset 0 0 8px rgba(255, 153, 221, 0.55);
+
+max-width: 100%;
+}
+
+.questionBar{
+  background: #1b59f5;
+  border-radius: 22px;
+  width: 900px;
+  white-space: nowrap;
+  font-family: "Roslindale", serif;
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: -0.09rem;
+  color: #fff;
+  text-align: center;
+  padding: 18px 36px;
+  min-width: 900px;
+  max-width: 900px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis;
+}
+
