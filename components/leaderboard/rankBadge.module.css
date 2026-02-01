@@ -1,0 +1,51 @@
+.badge {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  font-weight: 800;
+  color: #2e2e2e;
+
+  background: #2a3cff;
+}
+
+/* 🥇 FIRST */
+.first {
+  background: #DFB50D;
+  box-shadow:
+    0 0 6px rgba(250, 202, 81, 0.9),
+    0 0 14px rgba(235, 212, 155, 0.6),
+    0 0 24px rgba(255, 183, 3, 0.4);
+}
+
+/* 🥈 SECOND */
+.second {
+  background: #f88d40;
+  box-shadow:
+    0 0 6px #F89C5A,
+    0 0 14px #F79149,
+    0 0 24px #FAB88A;
+}
+
+/* 🥉 THIRD */
+.third {
+  background: #f16767;
+  box-shadow:
+    0 0 6px #FF5B5B,
+    0 0 14px #FF6F6F,
+    0 0 24px #FF9797;
+}
+
+
+/* everyone else */
+.default {
+ background: #f37ecc;
+  box-shadow:
+  0 0 6px #f489d0,
+    0 0 14px #F981D1,
+    0 0 24px #FA8FD7;
+}

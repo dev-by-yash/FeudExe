@@ -38,7 +38,7 @@ export default function GameBoard() {
         </div>
 
       <div className={styles.logoWrapper}>
-        <Image
+         <Image
           src="/Logo.png"
           alt="FEUD.exe"
           width={220}

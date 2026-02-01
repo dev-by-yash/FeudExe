@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+/* not working ig */
+@font-face {
+  font-family: "FK Raster Roman Compact Trial";
+  src: url("/fonts/FK-Raster-Roman-Compact-Trial.woff2") format("woff2"),
+       url("/fonts/FK-Raster-Roman-Compact-Trial.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+} 
 
 *,
 *::before,

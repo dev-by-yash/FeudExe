@@ -1,0 +1,5 @@
+.page {
+  min-height: 100vh;
+  padding: 80px;
+  background: radial-gradient(159.8% 159.8% at 50% 0%, #000 0%, #1B59F5 100%);
+}
