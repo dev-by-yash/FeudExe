@@ -1,0 +1,43 @@
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle, #0b1a3a, #020617);
+  color: white;
+  text-align: center;
+}
+
+.team {
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+
+.buzzBtn {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: #22c55e;
+  color: black;
+  font-size: 2.5rem;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 40px rgba(34, 197, 94, 0.6);
+}
+
+.buzzBtn:active {
+  transform: scale(0.95);
+}
+
+.disabled {
+  background: #64748b;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.status {
+  margin-top: 20px;
+  font-size: 1.2rem;
+}

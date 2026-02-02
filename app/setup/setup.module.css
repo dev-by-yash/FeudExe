@@ -1,0 +1,102 @@
+/* ===== PAGE ===== */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px;
+  font-family: system-ui, sans-serif;
+  background: #020617;
+  color: #e5e7eb;
+  min-height: 100vh;
+}
+
+.heading {
+  margin-bottom: 24px;
+  color: #f8fafc;
+}
+
+/* ===== SECTIONS ===== */
+.section {
+  border: 1px solid #1e293b;
+  padding: 16px;
+  margin-bottom: 24px;
+  background: #0b1a3a;
+  border-radius: 10px;
+}
+
+.section h2 {
+  margin-bottom: 12px;
+  color: #f1f5f9;
+}
+
+/* ===== DANGER ZONE ===== */
+.sectionDanger {
+  border: 2px solid #7f1d1d;
+  padding: 16px;
+  background: #1f0b0b;
+  border-radius: 10px;
+}
+
+.sectionDanger h2 {
+  color: #fecaca;
+}
+
+/* ===== INPUTS ===== */
+.input,
+.sel {
+  padding: 8px 10px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  background: #020617;
+  color: #e5e7eb;
+  border: 1px solid #334155;
+  border-radius: 6px;
+}
+
+.input::placeholder {
+  color: #94a3b8;
+}
+
+.input:focus,
+.sel:focus {
+  outline: none;
+  border-color: #6366f1;
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+  padding: 8px 14px;
+  cursor: pointer;
+  background: #1e293b;
+  color: #e5e7eb;
+  border: 1px solid #334155;
+  border-radius: 6px;
+}
+
+.btn:hover {
+  background: #334155;
+}
+
+/* ===== LISTS ===== */
+.playerList {
+  margin-top: 12px;
+  padding-left: 20px;
+}
+
+.playerList li {
+  margin-bottom: 6px;
+  color: #cbd5f5;
+}
+
+/* ===== RESET BUTTON ===== */
+.reset {
+  background: #b91c1c;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  font-weight: bold;
+  border-radius: 6px;
+}
+
+.reset:hover {
+  background: #dc2626;
+}
