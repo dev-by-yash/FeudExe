@@ -1,0 +1,652 @@
+[
+  {
+    "category": "General Knowledge",
+    "question": "Name something people do when they wake up",
+    "answers": [
+      { "text": "Brush teeth", "points": 32 },
+      { "text": "Take a shower", "points": 28 },
+      { "text": "Get dressed", "points": 25 },
+      { "text": "Eat breakfast", "points": 15 },
+      { "text": "Check phone", "points": 12 },
+      { "text": "Make coffee", "points": 8 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Food",
+    "question": "Name a popular pizza topping",
+    "answers": [
+      { "text": "Pepperoni", "points": 45 },
+      { "text": "Cheese", "points": 35 },
+      { "text": "Mushrooms", "points": 12 },
+      { "text": "Sausage", "points": 8 },
+      { "text": "Peppers", "points": 6 },
+      { "text": "Olives", "points": 4 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Animals",
+    "question": "Name an animal you might see at a zoo",
+    "answers": [
+      { "text": "Lion", "points": 38 },
+      { "text": "Elephant", "points": 32 },
+      { "text": "Monkey", "points": 18 },
+      { "text": "Tiger", "points": 12 },
+      { "text": "Giraffe", "points": 8 },
+      { "text": "Bear", "points": 6 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Transportation",
+    "question": "Name a way people get to work",
+    "answers": [
+      { "text": "Car", "points": 42 },
+      { "text": "Bus", "points": 28 },
+      { "text": "Train", "points": 18 },
+      { "text": "Walk", "points": 12 },
+      { "text": "Bike", "points": 8 },
+      { "text": "Subway", "points": 6 }
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "category": "Entertainment",
+    "question": "Name something you do at a movie theater",
+    "answers": [
+      { "text": "Watch a movie", "points": 48 },
+      { "text": "Eat popcorn", "points": 32 },
+      { "text": "Buy tickets", "points": 15 },
+      { "text": "Find a seat", "points": 10 },
+      { "text": "Buy drinks", "points": 8 },
+      { "text": "Turn off phone", "points": 5 }
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "category": "Sports",
+    "question": "Name a sport played with a ball",
+    "answers": [
+      { "text": "Football", "points": 35 },
+      { "text": "Basketball", "points": 28 },
+      { "text": "Baseball", "points": 22 },
+      { "text": "Soccer", "points": 15 },
+      { "text": "Tennis", "points": 10 },
+      { "text": "Volleyball", "points": 8 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Weather",
+    "question": "Name something people do when it rains",
+    "answers": [
+      { "text": "Use an umbrella", "points": 38 },
+      { "text": "Stay indoors", "points": 32 },
+      { "text": "Wear a raincoat", "points": 20 },
+      { "text": "Run for cover", "points": 10 },
+      { "text": "Drive slower", "points": 8 },
+      { "text": "Close windows", "points": 6 }
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "category": "Technology",
+    "question": "Name something people do on their phones",
+    "answers": [
+      { "text": "Make calls", "points": 35 },
+      { "text": "Send texts", "points": 30 },
+      { "text": "Browse internet", "points": 20 },
+      { "text": "Take photos", "points": 15 },
+      { "text": "Play games", "points": 12 },
+      { "text": "Check email", "points": 8 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Home",
+    "question": "Name something you find in a kitchen",
+    "answers": [
+      { "text": "Refrigerator", "points": 40 },
+      { "text": "Stove", "points": 35 },
+      { "text": "Sink", "points": 25 },
+      { "text": "Microwave", "points": 18 },
+      { "text": "Dishwasher", "points": 12 },
+      { "text": "Toaster", "points": 8 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "School",
+    "question": "Name something students carry in their backpack",
+    "answers": [
+      { "text": "Books", "points": 42 },
+      { "text": "Pencils", "points": 35 },
+      { "text": "Notebook", "points": 28 },
+      { "text": "Lunch", "points": 20 },
+      { "text": "Calculator", "points": 15 },
+      { "text": "Phone", "points": 10 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Clothing",
+    "question": "Name something people wear on their feet",
+    "answers": [
+      { "text": "Shoes", "points": 45 },
+      { "text": "Socks", "points": 38 },
+      { "text": "Sneakers", "points": 25 },
+      { "text": "Boots", "points": 18 },
+      { "text": "Sandals", "points": 12 },
+      { "text": "Slippers", "points": 8 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Holidays",
+    "question": "Name something associated with Christmas",
+    "answers": [
+      { "text": "Christmas tree", "points": 40 },
+      { "text": "Presents", "points": 35 },
+      { "text": "Santa Claus", "points": 30 },
+      { "text": "Snow", "points": 20 },
+      { "text": "Cookies", "points": 15 },
+      { "text": "Reindeer", "points": 10 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Food",
+    "question": "Name a breakfast food",
+    "answers": [
+      { "text": "Eggs", "points": 42 },
+      { "text": "Cereal", "points": 38 },
+      { "text": "Toast", "points": 28 },
+      { "text": "Pancakes", "points": 20 },
+      { "text": "Bacon", "points": 15 },
+      { "text": "Oatmeal", "points": 10 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Animals",
+    "question": "Name a pet that people commonly have",
+    "answers": [
+      { "text": "Dog", "points": 50 },
+      { "text": "Cat", "points": 45 },
+      { "text": "Fish", "points": 20 },
+      { "text": "Bird", "points": 15 },
+      { "text": "Hamster", "points": 8 },
+      { "text": "Rabbit", "points": 5 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Transportation",
+    "question": "Name something with wheels",
+    "answers": [
+      { "text": "Car", "points": 45 },
+      { "text": "Bicycle", "points": 35 },
+      { "text": "Truck", "points": 25 },
+      { "text": "Motorcycle", "points": 18 },
+      { "text": "Bus", "points": 12 },
+      { "text": "Skateboard", "points": 8 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Entertainment",
+    "question": "Name a type of TV show",
+    "answers": [
+      { "text": "Comedy", "points": 38 },
+      { "text": "Drama", "points": 32 },
+      { "text": "News", "points": 25 },
+      { "text": "Reality TV", "points": 18 },
+      { "text": "Sports", "points": 12 },
+      { "text": "Documentary", "points": 8 }
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "category": "Sports",
+    "question": "Name equipment used in baseball",
+    "answers": [
+      { "text": "Bat", "points": 42 },
+      { "text": "Ball", "points": 38 },
+      { "text": "Glove", "points": 30 },
+      { "text": "Helmet", "points": 20 },
+      { "text": "Uniform", "points": 12 },
+      { "text": "Cleats", "points": 8 }
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "category": "Weather",
+    "question": "Name something you see in the sky",
+    "answers": [
+      { "text": "Clouds", "points": 40 },
+      { "text": "Sun", "points": 35 },
+      { "text": "Moon", "points": 28 },
+      { "text": "Stars", "points": 20 },
+      { "text": "Birds", "points": 12 },
+      { "text": "Airplane", "points": 8 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Technology",
+    "question": "Name something that uses electricity",
+    "answers": [
+      { "text": "Computer", "points": 38 },
+      { "text": "Television", "points": 32 },
+      { "text": "Phone", "points": 25 },
+      { "text": "Refrigerator", "points": 18 },
+      { "text": "Light bulb", "points": 12 },
+      { "text": "Microwave", "points": 8 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Home",
+    "question": "Name a room in a house",
+    "answers": [
+      { "text": "Bedroom", "points": 40 },
+      { "text": "Kitchen", "points": 35 },
+      { "text": "Living room", "points": 30 },
+      { "text": "Bathroom", "points": 25 },
+      { "text": "Dining room", "points": 15 },
+      { "text": "Garage", "points": 8 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "School",
+    "question": "Name a school subject",
+    "answers": [
+      { "text": "Math", "points": 42 },
+      { "text": "English", "points": 38 },
+      { "text": "Science", "points": 30 },
+      { "text": "History", "points": 25 },
+      { "text": "Art", "points": 15 },
+      { "text": "Music", "points": 12 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Clothing",
+    "question": "Name something you wear on your head",
+    "answers": [
+      { "text": "Hat", "points": 45 },
+      { "text": "Cap", "points": 35 },
+      { "text": "Helmet", "points": 25 },
+      { "text": "Headband", "points": 18 },
+      { "text": "Beanie", "points": 12 },
+      { "text": "Crown", "points": 8 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Holidays",
+    "question": "Name something associated with Halloween",
+    "answers": [
+      { "text": "Pumpkin", "points": 40 },
+      { "text": "Costume", "points": 35 },
+      { "text": "Candy", "points": 30 },
+      { "text": "Ghost", "points": 20 },
+      { "text": "Witch", "points": 15 },
+      { "text": "Spider", "points": 10 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Food",
+    "question": "Name a fruit",
+    "answers": [
+      { "text": "Apple", "points": 42 },
+      { "text": "Orange", "points": 38 },
+      { "text": "Banana", "points": 32 },
+      { "text": "Grape", "points": 25 },
+      { "text": "Strawberry", "points": 18 },
+      { "text": "Pineapple", "points": 12 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Animals",
+    "question": "Name a farm animal",
+    "answers": [
+      { "text": "Cow", "points": 40 },
+      { "text": "Pig", "points": 35 },
+      { "text": "Chicken", "points": 30 },
+      { "text": "Horse", "points": 25 },
+      { "text": "Sheep", "points": 18 },
+      { "text": "Goat", "points": 12 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Transportation",
+    "question": "Name something that flies",
+    "answers": [
+      { "text": "Airplane", "points": 45 },
+      { "text": "Bird", "points": 35 },
+      { "text": "Helicopter", "points": 25 },
+      { "text": "Butterfly", "points": 18 },
+      { "text": "Bee", "points": 12 },
+      { "text": "Kite", "points": 8 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Entertainment",
+    "question": "Name a musical instrument",
+    "answers": [
+      { "text": "Piano", "points": 40 },
+      { "text": "Guitar", "points": 35 },
+      { "text": "Drums", "points": 28 },
+      { "text": "Violin", "points": 20 },
+      { "text": "Trumpet", "points": 15 },
+      { "text": "Flute", "points": 12 }
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "category": "Sports",
+    "question": "Name an Olympic sport",
+    "answers": [
+      { "text": "Swimming", "points": 38 },
+      { "text": "Running", "points": 32 },
+      { "text": "Gymnastics", "points": 25 },
+      { "text": "Basketball", "points": 20 },
+      { "text": "Tennis", "points": 15 },
+      { "text": "Skiing", "points": 12 }
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "category": "Weather",
+    "question": "Name a type of weather",
+    "answers": [
+      { "text": "Sunny", "points": 40 },
+      { "text": "Rainy", "points": 35 },
+      { "text": "Cloudy", "points": 28 },
+      { "text": "Snowy", "points": 22 },
+      { "text": "Windy", "points": 15 },
+      { "text": "Stormy", "points": 12 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Technology",
+    "question": "Name a social media platform",
+    "answers": [
+      { "text": "Facebook", "points": 40 },
+      { "text": "Instagram", "points": 35 },
+      { "text": "Twitter", "points": 28 },
+      { "text": "TikTok", "points": 22 },
+      { "text": "YouTube", "points": 18 },
+      { "text": "LinkedIn", "points": 10 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Home",
+    "question": "Name something you clean with",
+    "answers": [
+      { "text": "Soap", "points": 42 },
+      { "text": "Water", "points": 38 },
+      { "text": "Sponge", "points": 28 },
+      { "text": "Towel", "points": 20 },
+      { "text": "Vacuum", "points": 15 },
+      { "text": "Mop", "points": 12 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "School",
+    "question": "Name something a teacher uses",
+    "answers": [
+      { "text": "Whiteboard", "points": 38 },
+      { "text": "Marker", "points": 32 },
+      { "text": "Book", "points": 28 },
+      { "text": "Computer", "points": 22 },
+      { "text": "Desk", "points": 15 },
+      { "text": "Ruler", "points": 10 }
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "category": "Clothing",
+    "question": "Name something you wear to stay warm",
+    "answers": [
+      { "text": "Jacket", "points": 42 },
+      { "text": "Sweater", "points": 35 },
+      { "text": "Coat", "points": 28 },
+      { "text": "Scarf", "points": 20 },
+      { "text": "Gloves", "points": 15 },
+      { "text": "Hat", "points": 12 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Holidays",
+    "question": "Name something associated with Thanksgiving",
+    "answers": [
+      { "text": "Turkey", "points": 45 },
+      { "text": "Family", "points": 35 },
+      { "text": "Stuffing", "points": 25 },
+      { "text": "Cranberries", "points": 18 },
+      { "text": "Pumpkin pie", "points": 12 },
+      { "text": "Football", "points": 8 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Food",
+    "question": "Name a vegetable",
+    "answers": [
+      { "text": "Carrot", "points": 38 },
+      { "text": "Broccoli", "points": 32 },
+      { "text": "Potato", "points": 28 },
+      { "text": "Lettuce", "points": 22 },
+      { "text": "Tomato", "points": 18 },
+      { "text": "Onion", "points": 15 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Animals",
+    "question": "Name an animal that lives in water",
+    "answers": [
+      { "text": "Fish", "points": 45 },
+      { "text": "Shark", "points": 35 },
+      { "text": "Whale", "points": 28 },
+      { "text": "Dolphin", "points": 22 },
+      { "text": "Octopus", "points": 15 },
+      { "text": "Crab", "points": 12 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Transportation",
+    "question": "Name a type of boat",
+    "answers": [
+      { "text": "Sailboat", "points": 38 },
+      { "text": "Speedboat", "points": 32 },
+      { "text": "Yacht", "points": 25 },
+      { "text": "Canoe", "points": 20 },
+      { "text": "Cruise ship", "points": 15 },
+      { "text": "Kayak", "points": 12 }
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "category": "Entertainment",
+    "question": "Name a board game",
+    "answers": [
+      { "text": "Monopoly", "points": 40 },
+      { "text": "Scrabble", "points": 32 },
+      { "text": "Chess", "points": 25 },
+      { "text": "Checkers", "points": 20 },
+      { "text": "Risk", "points": 15 },
+      { "text": "Clue", "points": 12 }
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "category": "Sports",
+    "question": "Name a position in football",
+    "answers": [
+      { "text": "Quarterback", "points": 40 },
+      { "text": "Running back", "points": 32 },
+      { "text": "Wide receiver", "points": 25 },
+      { "text": "Linebacker", "points": 18 },
+      { "text": "Kicker", "points": 12 },
+      { "text": "Center", "points": 8 }
+    ],
+    "difficulty": "hard"
+  },
+  {
+    "category": "Weather",
+    "question": "Name something you need when it's hot",
+    "answers": [
+      { "text": "Water", "points": 42 },
+      { "text": "Air conditioning", "points": 35 },
+      { "text": "Sunscreen", "points": 28 },
+      { "text": "Hat", "points": 20 },
+      { "text": "Shade", "points": 15 },
+      { "text": "Fan", "points": 12 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Technology",
+    "question": "Name a computer brand",
+    "answers": [
+      { "text": "Apple", "points": 40 },
+      { "text": "Dell", "points": 32 },
+      { "text": "HP", "points": 28 },
+      { "text": "Lenovo", "points": 20 },
+      { "text": "Asus", "points": 15 },
+      { "text": "Acer", "points": 10 }
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "category": "Home",
+    "question": "Name something in a bathroom",
+    "answers": [
+      { "text": "Toilet", "points": 45 },
+      { "text": "Sink", "points": 38 },
+      { "text": "Shower", "points": 32 },
+      { "text": "Mirror", "points": 25 },
+      { "text": "Towel", "points": 18 },
+      { "text": "Toothbrush", "points": 12 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "School",
+    "question": "Name something you write with",
+    "answers": [
+      { "text": "Pen", "points": 45 },
+      { "text": "Pencil", "points": 40 },
+      { "text": "Marker", "points": 25 },
+      { "text": "Crayon", "points": 18 },
+      { "text": "Chalk", "points": 12 },
+      { "text": "Highlighter", "points": 8 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Clothing",
+    "question": "Name something you wear to exercise",
+    "answers": [
+      { "text": "Sneakers", "points": 40 },
+      { "text": "T-shirt", "points": 35 },
+      { "text": "Shorts", "points": 28 },
+      { "text": "Sweatpants", "points": 22 },
+      { "text": "Sports bra", "points": 15 },
+      { "text": "Headband", "points": 10 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Holidays",
+    "question": "Name something associated with Valentine's Day",
+    "answers": [
+      { "text": "Flowers", "points": 42 },
+      { "text": "Chocolate", "points": 38 },
+      { "text": "Cards", "points": 28 },
+      { "text": "Hearts", "points": 22 },
+      { "text": "Dinner", "points": 15 },
+      { "text": "Cupid", "points": 12 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Food",
+    "question": "Name a type of pasta",
+    "answers": [
+      { "text": "Spaghetti", "points": 42 },
+      { "text": "Macaroni", "points": 35 },
+      { "text": "Penne", "points": 25 },
+      { "text": "Lasagna", "points": 20 },
+      { "text": "Ravioli", "points": 15 },
+      { "text": "Fettuccine", "points": 12 }
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "category": "Animals",
+    "question": "Name an animal with stripes",
+    "answers": [
+      { "text": "Zebra", "points": 50 },
+      { "text": "Tiger", "points": 40 },
+      { "text": "Skunk", "points": 25 },
+      { "text": "Chipmunk", "points": 15 },
+      { "text": "Bee", "points": 10 },
+      { "text": "Snake", "points": 8 }
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "category": "Transportation",
+    "question": "Name a type of truck",
+    "answers": [
+      { "text": "Pickup truck", "points": 38 },
+      { "text": "Fire truck", "points": 32 },
+      { "text": "Garbage truck", "points": 25 },
+      { "text": "Delivery truck", "points": 20 },
+      { "text": "Tow truck", "points": 15 },
+      { "text": "Dump truck", "points": 12 }
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "category": "Entertainment",
+    "question": "Name a Disney movie",
+    "answers": [
+      { "text": "The Lion King", "points": 38 },
+      { "text": "Frozen", "points": 32 },
+      { "text": "Beauty and the Beast", "points": 25 },
+      { "text": "Aladdin", "points": 20 },
+      { "text": "The Little Mermaid", "points": 15 },
+      { "text": "Snow White", "points": 12 }
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "category": "Sports",
+    "question": "Name equipment used in tennis",
+    "answers": [
+      { "text": "Racket", "points": 45 },
+      { "text": "Ball", "points": 40 },
+      { "text": "Net", "points": 28 },
+      { "text": "Court", "points": 20 },
+      { "text": "Shoes", "points": 12 },
+      { "text": "Shorts", "points": 8 }
+    ],
+    "difficulty": "medium"
+  }
+]

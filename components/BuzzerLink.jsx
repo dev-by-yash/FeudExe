@@ -1,7 +1,14 @@
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 
 export default function BuzzerLink({ gameId = "default-game", className = "" }) {
+  const [origin, setOrigin] = useState('');
   const buzzerUrl = `/buzzer?gameId=${gameId}`;
+  
+  useEffect(() => {
+    // Set origin on client side to avoid hydration mismatch
+    setOrigin(window.location.origin);
+  }, []);
   
   return (
     <div className={`bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6 ${className}`}>
@@ -14,7 +21,7 @@ export default function BuzzerLink({ gameId = "default-game", className = "" }) 
         
         <div className="bg-white/5 border border-white/10 rounded-lg p-3">
           <code className="text-yellow-300 text-sm break-all">
-            {typeof window !== 'undefined' ? window.location.origin : ''}{buzzerUrl}
+            {origin}{buzzerUrl}
           </code>
         </div>
         
@@ -28,9 +35,8 @@ export default function BuzzerLink({ gameId = "default-game", className = "" }) 
           
           <button
             onClick={() => {
-              if (typeof window !== 'undefined') {
-                navigator.clipboard.writeText(window.location.origin + buzzerUrl);
-                // You could add a toast notification here
+              if (origin) {
+                navigator.clipboard.writeText(origin + buzzerUrl);
                 alert('Buzzer link copied to clipboard!');
               }
             }}

@@ -104,14 +104,11 @@ export const useSocket = (gameId) => {
     }
   };
 
-  const revealAnswer = (answerIndex, answer, points, teamId) => {
-    if (socketRef.current && gameId) {
+  const revealAnswer = (gameIdParam, answerData) => {
+    if (socketRef.current && gameIdParam) {
       socketRef.current.emit('reveal-answer', {
-        gameId,
-        answerIndex,
-        answer,
-        points,
-        teamId
+        gameId: gameIdParam,
+        ...answerData
       });
     }
   };

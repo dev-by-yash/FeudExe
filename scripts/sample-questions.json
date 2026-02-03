@@ -6,7 +6,9 @@
       { "text": "Brush teeth", "points": 32 },
       { "text": "Take a shower", "points": 28 },
       { "text": "Get dressed", "points": 25 },
-      { "text": "Eat breakfast", "points": 15 }
+      { "text": "Eat breakfast", "points": 15 },
+      { "text": "Check phone", "points": 12 },
+      { "text": "Make coffee", "points": 8 }
     ],
     "difficulty": "easy"
   },
@@ -17,7 +19,9 @@
       { "text": "Pepperoni", "points": 45 },
       { "text": "Cheese", "points": 35 },
       { "text": "Mushrooms", "points": 12 },
-      { "text": "Sausage", "points": 8 }
+      { "text": "Sausage", "points": 8 },
+      { "text": "Peppers", "points": 6 },
+      { "text": "Olives", "points": 4 }
     ],
     "difficulty": "easy"
   },
@@ -28,7 +32,9 @@
       { "text": "Lion", "points": 38 },
       { "text": "Elephant", "points": 32 },
       { "text": "Monkey", "points": 18 },
-      { "text": "Tiger", "points": 12 }
+      { "text": "Tiger", "points": 12 },
+      { "text": "Giraffe", "points": 8 },
+      { "text": "Bear", "points": 6 }
     ],
     "difficulty": "easy"
   },
@@ -39,7 +45,9 @@
       { "text": "Car", "points": 42 },
       { "text": "Bus", "points": 28 },
       { "text": "Train", "points": 18 },
-      { "text": "Walk", "points": 12 }
+      { "text": "Walk", "points": 12 },
+      { "text": "Bike", "points": 8 },
+      { "text": "Subway", "points": 6 }
     ],
     "difficulty": "medium"
   },
@@ -50,7 +58,9 @@
       { "text": "Watch a movie", "points": 48 },
       { "text": "Eat popcorn", "points": 32 },
       { "text": "Buy tickets", "points": 15 },
-      { "text": "Find a seat", "points": 5 }
+      { "text": "Find a seat", "points": 10 },
+      { "text": "Buy drinks", "points": 8 },
+      { "text": "Turn off phone", "points": 5 }
     ],
     "difficulty": "medium"
   },
@@ -61,7 +71,9 @@
       { "text": "Football", "points": 35 },
       { "text": "Basketball", "points": 28 },
       { "text": "Baseball", "points": 22 },
-      { "text": "Soccer", "points": 15 }
+      { "text": "Soccer", "points": 15 },
+      { "text": "Tennis", "points": 10 },
+      { "text": "Volleyball", "points": 8 }
     ],
     "difficulty": "easy"
   },
@@ -72,7 +84,9 @@
       { "text": "Use an umbrella", "points": 38 },
       { "text": "Stay indoors", "points": 32 },
       { "text": "Wear a raincoat", "points": 20 },
-      { "text": "Run for cover", "points": 10 }
+      { "text": "Run for cover", "points": 10 },
+      { "text": "Drive slower", "points": 8 },
+      { "text": "Close windows", "points": 6 }
     ],
     "difficulty": "medium"
   },
@@ -83,7 +97,61 @@
       { "text": "Make calls", "points": 35 },
       { "text": "Send texts", "points": 30 },
       { "text": "Browse internet", "points": 20 },
-      { "text": "Take photos", "points": 15 }
+      { "text": "Take photos", "points": 15 },
+      { "text": "Play games", "points": 12 },
+      { "text": "Check email", "points": 8 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Home",
+    "question": "Name something you find in a kitchen",
+    "answers": [
+      { "text": "Refrigerator", "points": 40 },
+      { "text": "Stove", "points": 35 },
+      { "text": "Sink", "points": 25 },
+      { "text": "Microwave", "points": 18 },
+      { "text": "Dishwasher", "points": 12 },
+      { "text": "Toaster", "points": 8 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "School",
+    "question": "Name something students carry in their backpack",
+    "answers": [
+      { "text": "Books", "points": 42 },
+      { "text": "Pencils", "points": 35 },
+      { "text": "Notebook", "points": 28 },
+      { "text": "Lunch", "points": 20 },
+      { "text": "Calculator", "points": 15 },
+      { "text": "Phone", "points": 10 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Clothing",
+    "question": "Name something people wear on their feet",
+    "answers": [
+      { "text": "Shoes", "points": 45 },
+      { "text": "Socks", "points": 38 },
+      { "text": "Sneakers", "points": 25 },
+      { "text": "Boots", "points": 18 },
+      { "text": "Sandals", "points": 12 },
+      { "text": "Slippers", "points": 8 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Holidays",
+    "question": "Name something associated with Christmas",
+    "answers": [
+      { "text": "Christmas tree", "points": 40 },
+      { "text": "Presents", "points": 35 },
+      { "text": "Santa Claus", "points": 30 },
+      { "text": "Snow", "points": 20 },
+      { "text": "Cookies", "points": 15 },
+      { "text": "Reindeer", "points": 10 }
     ],
     "difficulty": "easy"
   }

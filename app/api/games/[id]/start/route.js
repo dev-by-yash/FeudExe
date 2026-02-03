@@ -16,7 +16,7 @@ export async function POST(request, { params }) {
       );
     }
 
-    if (game.gameState !== 'waiting') {
+    if (game.gameState !== 'setup') {
       return NextResponse.json(
         { success: false, error: 'Game is already in progress' },
         { status: 400 }

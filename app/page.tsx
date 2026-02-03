@@ -17,7 +17,7 @@ export default function Home() {
         <div className="mb-12">
           <div className="flex justify-center mb-8">
             <Image
-              src="/Logo.png"
+              src="/logo.svg"
               alt="FEUD.EXE Logo"
               width={400}
               height={200}
@@ -97,6 +97,15 @@ export default function Home() {
             <div className="text-4xl mb-4">🔔</div>
             <h3 className="text-2xl font-bold text-white mb-2">Buzzer</h3>
             <p className="text-gray-300">Player buzzer interface</p>
+          </div>
+        </Link>
+
+        {/* Debug */}
+        <Link href="/debug" className="group">
+          <div className="bg-gradient-to-br from-gray-500/20 to-slate-600/20 backdrop-blur-sm border border-gray-400/30 rounded-2xl p-6 text-center hover:from-gray-500/30 hover:to-slate-600/30 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-gray-500/25">
+            <div className="text-4xl mb-4">🔍</div>
+            <h3 className="text-2xl font-bold text-white mb-2">Debug</h3>
+            <p className="text-gray-300">Check database status</p>
           </div>
         </Link>
 

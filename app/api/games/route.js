@@ -49,7 +49,7 @@ export async function POST(request) {
         score: 0,
         strikes: 0
       })),
-      gameState: 'waiting',
+      gameState: 'setup', // Changed from 'waiting' to 'setup' (valid enum value)
       settings: {
         teamSize: settings?.teamSize || 4,
         maxStrikes: settings?.maxStrikes || 3,

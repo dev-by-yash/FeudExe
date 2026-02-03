@@ -99,8 +99,24 @@ app.prepare().then(() => {
     socket.on('reveal-answer', (data) => {
       const { gameId, ...answerData } = data;
       
+      console.log(`Answer revealed in game ${gameId}:`, answerData);
+      
+      // Broadcast to all clients in the game room
       io.to(`game-${gameId}`).emit('answer-revealed', {
         ...answerData,
+        timestamp: Date.now()
+      });
+    });
+
+    // Game state updates from host
+    socket.on('host-game-update', (data) => {
+      const { gameId, ...updateData } = data;
+      
+      console.log(`Host game update for game ${gameId}:`, updateData);
+      
+      // Broadcast to all clients in the game room
+      socket.to(`game-${gameId}`).emit('game-state-updated', {
+        ...updateData,
         timestamp: Date.now()
       });
     });

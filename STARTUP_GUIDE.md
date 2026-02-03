@@ -17,9 +17,14 @@ sudo systemctl start mongod
 mongod --dbpath /path/to/your/db
 ```
 
-### 3. Import Sample Questions
+### 3. Setup Sample Data (IMPORTANT!)
 ```bash
-npm run import-sample
+# Create sample teams AND import questions
+npm run setup-game
+
+# OR run individually:
+npm run create-teams    # Creates 4 sample teams with players
+npm run import-sample   # Imports 12 sample questions
 ```
 
 ### 4. Start the Application
@@ -28,6 +33,31 @@ npm run dev
 ```
 
 The application will be available at: **http://localhost:3000**
+
+---
+
+## 🚨 **IMPORTANT: Teams Issue Fix**
+
+### **If you see "No teams found" when starting a game:**
+
+1. **Create sample teams first:**
+   ```bash
+   npm run create-teams
+   ```
+
+2. **Or create teams manually:**
+   - Go to `/setup` page
+   - Create at least 2 teams
+   - Add players to each team
+
+3. **Verify teams exist:**
+   - Go to `/debug` page (now available on homepage)
+   - Check if teams are listed
+
+4. **Complete setup:**
+   ```bash
+   npm run setup-game  # Creates teams + imports questions
+   ```
 
 ---
 

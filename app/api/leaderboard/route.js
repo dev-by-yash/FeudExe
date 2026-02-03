@@ -78,7 +78,7 @@ export async function GET(request) {
         totalTeams: await Team.countDocuments(),
         totalGames: await Game.countDocuments({ gameState: 'completed' }),
         activeGames: await Game.countDocuments({ 
-          gameState: { $in: ['waiting', 'active', 'buzzer', 'answering'] } 
+          gameState: { $in: ['setup', 'active', 'buzzer', 'answering'] } 
         })
       }
     });
