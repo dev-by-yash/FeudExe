@@ -1,10 +1,14 @@
 import Leaderboard from "@/components/leaderboard";
+import BackToHome from "../../components/BackToHome";
 import styles from "./page.module.css";
 
 export default function LeaderboardPage() {
   return (
-    <div className={styles.page}>
-      <Leaderboard />
-    </div>
+    <>
+      <BackToHome />
+      <div className={styles.page}>
+        <Leaderboard />
+      </div>
+    </>
   );
 }

@@ -16,12 +16,12 @@ export default function GameBoard() {
     >
       <QuestionBar question="Name something students pretend to understand in class but actually don't." />
 
-        
-<div className={styles.board}>
-      <div className={styles.scoreLeft}></div>
-         <ScoreBox score={10} />
 
-      
+      <div className={styles.board}>
+        <div className={styles.scoreLeft}></div>
+        <ScoreBox score={10} />
+
+
         <div className="flex flex-col items-center gap-6">
           <Timer time="00" />
 
@@ -34,11 +34,11 @@ export default function GameBoard() {
             <OptionCard index={6} />
           </div>
         </div>
-            <ScoreBox score={10} />
-        </div>
+        <ScoreBox score={10} />
+      </div>
 
       <div className={styles.logoWrapper}>
-         <Image
+        <Image
           src="/Logo.png"
           alt="FEUD.exe"
           width={220}

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import styles from "./question.module.css";
+import BackToHome from "../../components/BackToHome";
 
 export default function QuestionManager() {
   const [questions, setQuestions] = useState([]);
@@ -62,7 +63,9 @@ export default function QuestionManager() {
   };
 
   return (
-    <main className={styles.container}>
+    <>
+      <BackToHome />
+      <main className={styles.container}>
       <h1>Question Manager</h1>
 
       <section className={styles.section}>
@@ -109,6 +112,7 @@ export default function QuestionManager() {
           </ul>
         </section>
       ))}
-    </main>
+      </main>
+    </>
   );
 }

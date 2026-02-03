@@ -1,0 +1,442 @@
+{
+  "info": {
+    "name": "Team Feud Game API",
+    "description": "Complete API collection for testing the Team Feud Game backend",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000/api",
+      "type": "string"
+    },
+    {
+      "key": "team1Id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "team2Id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "questionId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "gameId",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Teams",
+      "item": [
+        {
+          "name": "Create Team Alpha",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Team Alpha\",\n  \"players\": [\n    {\"name\": \"Alice\"},\n    {\"name\": \"Bob\"}\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/teams",
+              "host": ["{{baseUrl}}"],
+              "path": ["teams"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('team1Id', response.team._id);",
+                  "    console.log('Team 1 ID saved:', response.team._id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create Team Beta",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Team Beta\",\n  \"players\": [\n    {\"name\": \"Charlie\"},\n    {\"name\": \"Diana\"}\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/teams",
+              "host": ["{{baseUrl}}"],
+              "path": ["teams"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('team2Id', response.team._id);",
+                  "    console.log('Team 2 ID saved:', response.team._id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get All Teams",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/teams",
+              "host": ["{{baseUrl}}"],
+              "path": ["teams"]
+            }
+          }
+        },
+        {
+          "name": "Add Player to Team",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Eve\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/teams/{{team1Id}}/players",
+              "host": ["{{baseUrl}}"],
+              "path": ["teams", "{{team1Id}}", "players"]
+            }
+          }
+        },
+        {
+          "name": "Get Specific Team",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/teams/{{team1Id}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["teams", "{{team1Id}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Questions",
+      "item": [
+        {
+          "name": "Create Question",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"category\": \"Test Category\",\n  \"question\": \"Name something you do in the morning\",\n  \"answers\": [\n    {\"text\": \"Brush teeth\", \"points\": 35},\n    {\"text\": \"Take shower\", \"points\": 28},\n    {\"text\": \"Eat breakfast\", \"points\": 22},\n    {\"text\": \"Get dressed\", \"points\": 15}\n  ],\n  \"difficulty\": \"easy\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/questions",
+              "host": ["{{baseUrl}}"],
+              "path": ["questions"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('questionId', response.question._id);",
+                  "    console.log('Question ID saved:', response.question._id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get All Questions",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/questions",
+              "host": ["{{baseUrl}}"],
+              "path": ["questions"]
+            }
+          }
+        },
+        {
+          "name": "Get Categories",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/questions/categories",
+              "host": ["{{baseUrl}}"],
+              "path": ["questions", "categories"]
+            }
+          }
+        },
+        {
+          "name": "Get Questions by Category",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/questions?category=Test Category",
+              "host": ["{{baseUrl}}"],
+              "path": ["questions"],
+              "query": [
+                {
+                  "key": "category",
+                  "value": "Test Category"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Games",
+      "item": [
+        {
+          "name": "Create Game",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"teamIds\": [\"{{team1Id}}\", \"{{team2Id}}\"],\n  \"settings\": {\n    \"teamSize\": 4,\n    \"maxStrikes\": 3,\n    \"questionTimeLimit\": 30\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/games",
+              "host": ["{{baseUrl}}"],
+              "path": ["games"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('gameId', response.game._id);",
+                  "    console.log('Game ID saved:', response.game._id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Start Game",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"questionId\": \"{{questionId}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/games/{{gameId}}/start",
+              "host": ["{{baseUrl}}"],
+              "path": ["games", "{{gameId}}", "start"]
+            }
+          }
+        },
+        {
+          "name": "Buzzer Press",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"teamId\": \"{{team1Id}}\",\n  \"playerId\": \"player1\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/games/{{gameId}}/buzzer",
+              "host": ["{{baseUrl}}"],
+              "path": ["games", "{{gameId}}", "buzzer"]
+            }
+          }
+        },
+        {
+          "name": "Submit Correct Answer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"answerIndex\": 0,\n  \"isCorrect\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/games/{{gameId}}/answer",
+              "host": ["{{baseUrl}}"],
+              "path": ["games", "{{gameId}}", "answer"]
+            }
+          }
+        },
+        {
+          "name": "Submit Wrong Answer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"isCorrect\": false\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/games/{{gameId}}/answer",
+              "host": ["{{baseUrl}}"],
+              "path": ["games", "{{gameId}}", "answer"]
+            }
+          }
+        },
+        {
+          "name": "Get Game Status",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/games/{{gameId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["games", "{{gameId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Settings",
+      "item": [
+        {
+          "name": "Get Settings",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/settings",
+              "host": ["{{baseUrl}}"],
+              "path": ["settings"]
+            }
+          }
+        },
+        {
+          "name": "Update Settings",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"teamSize\": 6,\n  \"maxStrikes\": 4,\n  \"questionTimeLimit\": 45,\n  \"buzzerTimeLimit\": 8\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/settings",
+              "host": ["{{baseUrl}}"],
+              "path": ["settings"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Leaderboard",
+      "item": [
+        {
+          "name": "Get Leaderboard",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/leaderboard",
+              "host": ["{{baseUrl}}"],
+              "path": ["leaderboard"]
+            }
+          }
+        },
+        {
+          "name": "Get Leaderboard by Games Won",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/leaderboard?sortBy=gamesWon&limit=5",
+              "host": ["{{baseUrl}}"],
+              "path": ["leaderboard"],
+              "query": [
+                {
+                  "key": "sortBy",
+                  "value": "gamesWon"
+                },
+                {
+                  "key": "limit",
+                  "value": "5"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

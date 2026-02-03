@@ -1,0 +1,90 @@
+[
+  {
+    "category": "General Knowledge",
+    "question": "Name something people do when they wake up",
+    "answers": [
+      { "text": "Brush teeth", "points": 32 },
+      { "text": "Take a shower", "points": 28 },
+      { "text": "Get dressed", "points": 25 },
+      { "text": "Eat breakfast", "points": 15 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Food",
+    "question": "Name a popular pizza topping",
+    "answers": [
+      { "text": "Pepperoni", "points": 45 },
+      { "text": "Cheese", "points": 35 },
+      { "text": "Mushrooms", "points": 12 },
+      { "text": "Sausage", "points": 8 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Animals",
+    "question": "Name an animal you might see at a zoo",
+    "answers": [
+      { "text": "Lion", "points": 38 },
+      { "text": "Elephant", "points": 32 },
+      { "text": "Monkey", "points": 18 },
+      { "text": "Tiger", "points": 12 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Transportation",
+    "question": "Name a way people get to work",
+    "answers": [
+      { "text": "Car", "points": 42 },
+      { "text": "Bus", "points": 28 },
+      { "text": "Train", "points": 18 },
+      { "text": "Walk", "points": 12 }
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "category": "Entertainment",
+    "question": "Name something you do at a movie theater",
+    "answers": [
+      { "text": "Watch a movie", "points": 48 },
+      { "text": "Eat popcorn", "points": 32 },
+      { "text": "Buy tickets", "points": 15 },
+      { "text": "Find a seat", "points": 5 }
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "category": "Sports",
+    "question": "Name a sport played with a ball",
+    "answers": [
+      { "text": "Football", "points": 35 },
+      { "text": "Basketball", "points": 28 },
+      { "text": "Baseball", "points": 22 },
+      { "text": "Soccer", "points": 15 }
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "category": "Weather",
+    "question": "Name something people do when it rains",
+    "answers": [
+      { "text": "Use an umbrella", "points": 38 },
+      { "text": "Stay indoors", "points": 32 },
+      { "text": "Wear a raincoat", "points": 20 },
+      { "text": "Run for cover", "points": 10 }
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "category": "Technology",
+    "question": "Name something people do on their phones",
+    "answers": [
+      { "text": "Make calls", "points": 35 },
+      { "text": "Send texts", "points": 30 },
+      { "text": "Browse internet", "points": 20 },
+      { "text": "Take photos", "points": 15 }
+    ],
+    "difficulty": "easy"
+  }
+]
