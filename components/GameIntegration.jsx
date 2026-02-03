@@ -22,20 +22,22 @@ export default function GameIntegration() {
     revealAnswer: revealAnswerInState,
     nextQuestion: nextQuestionInState,
     setTeams: setTeamsInState,
-    updateState
+    updateState,
+    setGameId: setSharedGameId
   } = useGameState();
 
   const gameQuestions = sharedGameState.questions;
   const currentQuestionIndex = sharedGameState.currentQuestionIndex;
   const currentRound = sharedGameState.currentRound;
 
-  const gameId = currentGame?._id || 'default-game';
+  const gameId = currentGame?._id || sharedGameState.gameId || 'default-game';
   const {
     buzzerPressed,
     clearBuzzerPressed,
     updateGameState,
     revealAnswer,
-    isConnected
+    isConnected,
+    gameState: socketGameState
   } = useSocket(gameId);
 
   // Load initial data
@@ -47,14 +49,26 @@ export default function GameIntegration() {
 
   const checkExistingGame = async () => {
     try {
-      const storedGameId = localStorage.getItem('currentGameId');
-      if (storedGameId) {
-        console.log('Found existing game:', storedGameId);
-        const response = await gameAPI.getById(storedGameId);
+      // Check URL parameters first
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlGameId = urlParams.get('gameId');
+      
+      const targetGameId = urlGameId || localStorage.getItem('currentGameId');
+      
+      if (targetGameId) {
+        console.log('Found existing game:', targetGameId);
+        const response = await gameAPI.getById(targetGameId);
         if (response.game) {
           setCurrentGame(response.game);
+          setSharedGameId(targetGameId);
           setGameState('active');
-          console.log('Loaded existing game');
+          console.log('Loaded existing game:', targetGameId);
+          
+          // Update URL if not already there
+          if (!urlGameId) {
+            const newUrl = `${window.location.pathname}?gameId=${targetGameId}`;
+            window.history.replaceState({}, '', newUrl);
+          }
         }
       }
     } catch (error) {
@@ -67,17 +81,17 @@ export default function GameIntegration() {
     try {
       console.log('Loading teams from database...');
       setError(null);
-      
+
       const response = await teamAPI.getAll();
       console.log('Teams API response:', response);
-      
+
       if (response.success === false) {
         throw new Error(response.error || 'Failed to load teams');
       }
-      
+
       const teamsArray = response.teams || [];
       setTeams(teamsArray);
-      
+
       if (teamsArray.length === 0) {
         setError('No teams found. Please create teams first in Setup Teams page.');
       } else {
@@ -93,7 +107,7 @@ export default function GameIntegration() {
     try {
       console.log('Loading questions from database...');
       const response = await questionAPI.getAll();
-      
+
       if (response.questions && response.questions.length > 0) {
         setQuestions(response.questions);
         console.log(`Loaded ${response.questions.length} questions from database`);
@@ -120,7 +134,7 @@ export default function GameIntegration() {
     setLoading(true);
     try {
       console.log('Creating new game with teams:', selectedTeams);
-      
+
       // Create game in database
       const response = await gameAPI.create({
         teamIds: selectedTeams,
@@ -130,30 +144,35 @@ export default function GameIntegration() {
           questionTimeLimit: 30
         }
       });
-      
+
       if (!response.game) {
         throw new Error('Failed to create game in database');
       }
-      
+
       setCurrentGame(response.game);
       localStorage.setItem('currentGameId', response.game._id);
-      
+      setSharedGameId(response.game._id);
+
       // Select 9 random questions
       const shuffled = [...questions].sort(() => 0.5 - Math.random());
       const selectedQuestions = shuffled.slice(0, 9);
-      
+
       // Set questions in shared state for control panel
       setGameQuestions(selectedQuestions);
-      
+
       // Set teams in shared state
       setTeamsInState(selectedTeams);
-      
+
       setGameState('active');
       setError(null);
-      
+
       console.log('Game created successfully:', response.game._id);
       console.log('Selected 9 questions for the game');
       
+      // Update URL to include gameId
+      const newUrl = `${window.location.pathname}?gameId=${response.game._id}`;
+      window.history.replaceState({}, '', newUrl);
+
     } catch (error) {
       console.error('Failed to create game:', error);
       setError(`Failed to create game: ${error.message}`);
@@ -170,7 +189,7 @@ export default function GameIntegration() {
 
     const handleAnswerRevealed = (data) => {
       console.log('📡 Answer revealed by control panel:', data);
-      
+
       // Update shared state
       if (data.questionIndex !== undefined && data.answerIndex !== undefined) {
         revealAnswerInState(data.questionIndex, data.answerIndex);
@@ -180,30 +199,30 @@ export default function GameIntegration() {
 
     const handleGameStateUpdate = (data) => {
       console.log('📡 Game state updated by control panel:', data);
-      
+
       // Handle next question event
       if (data.nextQuestion) {
         console.log('🔄 Next question triggered by control panel:', data.nextQuestion);
-        
+
         // Update shared game state to match control panel
         if (data.currentQuestionIndex !== undefined) {
           updateState({
             currentQuestionIndex: data.currentQuestionIndex,
             currentRound: data.currentRound || Math.ceil((data.currentQuestionIndex + 1) / 3),
-            revealedAnswers: sharedGameState.revealedAnswers.map((answers, index) => 
+            revealedAnswers: sharedGameState.revealedAnswers.map((answers, index) =>
               index === data.currentQuestionIndex ? Array(6).fill(false) : answers
             )
           });
         }
       }
-      
+
       // Handle answer reveals
       if (data.answerRevealed) {
         const { questionIndex, answerIndex } = data.answerRevealed;
         revealAnswerInState(questionIndex, answerIndex);
         console.log(`✅ Synced answer reveal: Q${questionIndex + 1} A${answerIndex + 1}`);
       }
-      
+
       // Handle game completion
       if (data.gameState === 'completed' || data.gameCompleted) {
         setGameState('completed');
@@ -216,9 +235,9 @@ export default function GameIntegration() {
     if (socket) {
       socket.on('answer-revealed', handleAnswerRevealed);
       socket.on('game-state-updated', handleGameStateUpdate);
-      
+
       console.log('✅ Socket.IO listeners registered');
-      
+
       return () => {
         socket.off('answer-revealed', handleAnswerRevealed);
         socket.off('game-state-updated', handleGameStateUpdate);
@@ -263,19 +282,19 @@ export default function GameIntegration() {
           )}
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            
+
             {/* Team Selection */}
             <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6">
               <h2 className="text-2xl font-bold text-white mb-4">Select Teams</h2>
-              
+
               {teams.length === 0 ? (
                 <div className="text-center py-8">
                   <p className="text-gray-400 text-lg mb-4">No teams available</p>
                   <p className="text-gray-500 text-sm mb-4">
                     You need to create teams first before starting a game.
                   </p>
-                  <a 
-                    href="/setup" 
+                  <a
+                    href="/setup"
                     className="inline-block py-2 px-4 bg-blue-500/20 border border-blue-400/30 text-blue-300 rounded-lg hover:bg-blue-500/30 transition-all duration-300"
                   >
                     Go to Setup Teams
@@ -320,7 +339,7 @@ export default function GameIntegration() {
             {/* Game Info */}
             <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6">
               <h2 className="text-2xl font-bold text-white mb-4">Game Information</h2>
-              
+
               <div className="space-y-4">
                 <div className="bg-white/5 rounded-lg p-4">
                   <h3 className="text-lg font-semibold text-yellow-400 mb-2">📋 Game Structure</h3>
@@ -377,7 +396,7 @@ export default function GameIntegration() {
             >
               {loading ? 'Creating Game...' : 'Start Game & Open Control Panel'}
             </button>
-            
+
             {(selectedTeams.length < 2 || questions.length < 9) && (
               <div className="mt-4 space-y-2">
                 {selectedTeams.length < 2 && (
@@ -427,61 +446,104 @@ export default function GameIntegration() {
     const questionInRound = getCurrentQuestionInRound();
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
-        <div className="max-w-6xl mx-auto">
-          
-          {/* Game Header */}
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white p-6">
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-white mb-2">
-              🎮 Family Feud Game
-            </h1>
-            <div className="flex justify-center items-center space-x-6">
-              <div className="text-yellow-400 font-semibold">
-                Round {currentRound}/3
+            <h1 className="text-5xl font-bold mb-4">🎮 FEUD.EXE</h1>
+            <p className="text-xl text-gray-300">Game Integration System</p>
+
+            {/* Game Status */}
+            {gameState === 'setup' && (
+              <div className="mt-4 inline-block px-6 py-3 bg-yellow-500/20 border border-yellow-400/30 rounded-lg">
+                <span className="text-yellow-300 font-semibold">⚙️ Setting up game...</span>
               </div>
-              <div className="text-blue-400 font-semibold">
-                Question {questionInRound}/3
+            )}
+            {gameState === 'active' && (
+              <div className="mt-4 inline-block px-6 py-3 bg-green-500/20 border border-green-400/30 rounded-lg">
+                <span className="text-green-300 font-semibold">🟢 Game Active</span>
               </div>
-              <div className="text-green-400 font-semibold">
-                Progress: {currentQuestionIndex + 1}/9
+            )}
+            {gameState === 'completed' && (
+              <div className="mt-4 inline-block px-6 py-3 bg-blue-500/20 border border-blue-400/30 rounded-lg">
+                <span className="text-blue-300 font-semibold">🎉 Game Completed!</span>
               </div>
-              <div className={`font-semibold ${isConnected ? 'text-green-400' : 'text-red-400'}`}>
-                {isConnected ? '🟢 Synced with Control Panel' : '🔴 Not Connected'}
-              </div>
-            </div>
-            
-            {/* Real-time sync status */}
-            <div className="mt-2 text-sm text-gray-400">
-              Game ID: {gameId} | Questions Loaded: {gameQuestions.length}/9
-            </div>
+            )}
           </div>
 
-          {/* Control Panel Link */}
-          <div className="text-center mb-6">
-            <div className="space-x-4">
-              <a
-                href="/control"
-                target="_blank"
-                className="inline-block py-3 px-6 bg-gradient-to-r from-orange-500 to-red-600 text-white font-bold rounded-lg hover:from-orange-600 hover:to-red-700 transition-all duration-300 shadow-lg"
-              >
-                🎛️ Open Control Panel (Host)
-              </a>
-              
-              <button
-                onClick={() => {
-                  console.log('🔄 Manual sync requested');
-                  // Force re-render to check for updates
-                  updateState({ lastSync: Date.now() });
-                }}
-                className="inline-block py-3 px-6 bg-gradient-to-r from-blue-500 to-cyan-600 text-white font-bold rounded-lg hover:from-blue-600 hover:to-cyan-700 transition-all duration-300"
-              >
-                🔄 Sync Now
-              </button>
+          {/* Round & Streak Information Bar */}
+          {gameQuestions.length > 0 && (
+            <div className="mb-6 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-4">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div>
+                  <div className="text-yellow-400 font-semibold text-sm mb-1">Round</div>
+                  <div className="text-white text-2xl font-bold">{currentRound}/3</div>
+                  <div className="text-gray-400 text-xs mt-1">×{[1, 2, 3][currentRound - 1]} multiplier</div>
+                </div>
+                <div>
+                  <div className="text-blue-400 font-semibold text-sm mb-1">Question</div>
+                  <div className="text-white text-2xl font-bold">{currentQuestionIndex + 1}/9</div>
+                  <div className="text-gray-400 text-xs mt-1">Question {((currentQuestionIndex % 3) + 1)} of round</div>
+                </div>
+                <div>
+                  <div className="text-orange-400 font-semibold text-sm mb-1">Active Streak</div>
+                  <div className="text-white text-2xl font-bold">
+                    {socketGameState?.streakCount || 0}
+                    {socketGameState?.streakCount > 0 && (
+                      <span className="text-orange-300 text-base ml-2">
+                        ×{socketGameState?.streakMultiplier || 1}
+                      </span>
+                    )}
+                  </div>
+                  <div className="text-gray-400 text-xs mt-1">
+                    {socketGameState?.streakTeam ? `Team ${socketGameState.streakTeam}` : 'No active streak'}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-purple-400 font-semibold text-sm mb-1">Current Team</div>
+                  <div className="text-white text-2xl font-bold">
+                    {socketGameState?.currentTeam || 'A'}
+                  </div>
+                  <div className="text-gray-400 text-xs mt-1">
+                    {socketGameState?.teams?.[socketGameState?.currentTeam]?.name || 'Team ' + (socketGameState?.currentTeam || 'A')}
+                  </div>
+                </div>
+              </div>
             </div>
-            <p className="text-gray-400 text-sm mt-2">
-              Host uses the Control Panel to manage questions, reveal answers, and control the game
-            </p>
-          </div>
+          )}
+
+          {/* Control Panel Link */}
+          {gameId && (
+            <div className="mb-6 p-4 bg-blue-500/20 border border-blue-400/30 rounded-lg">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div>
+                  <h3 className="text-blue-300 font-semibold text-lg">🎛️ Host Controls</h3>
+                  <p className="text-gray-400 text-sm">Game ID: {gameId}</p>
+                  <p className="text-gray-400 text-sm mt-2">
+                    Host uses the Control Panel to manage questions, reveal answers, and control the game
+                  </p>
+                </div>
+                <div className="flex gap-3">
+                  <a
+                    href={`/control?gameId=${gameId}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300"
+                  >
+                    Open Control Panel
+                  </a>
+                  <a
+                    href="/buzzer-test"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-lg hover:from-green-600 hover:to-emerald-700 transition-all duration-300"
+                  >
+                    Test Buzzer
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Current Question Display */}
           {currentQuestion && (
@@ -492,7 +554,7 @@ export default function GameIntegration() {
               <p className="text-gray-400 text-center mb-6 text-lg">
                 Category: {currentQuestion.category}
               </p>
-              
+
               {/* 6 Answers Grid - Clean Display with Real-time Updates */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {Array.from({ length: 6 }, (_, index) => {
@@ -501,38 +563,35 @@ export default function GameIntegration() {
                   return (
                     <div
                       key={index}
-                      className={`p-6 rounded-lg border min-h-[120px] flex flex-col justify-between transition-all duration-700 transform ${
-                        isRevealed 
-                          ? 'bg-green-500/20 border-green-400/30 scale-105 shadow-lg animate-pulse' 
-                          : 'bg-white/5 border-white/20 hover:bg-white/10'
-                      }`}
+                      className={`p-6 rounded-lg border min-h-[120px] flex flex-col justify-between transition-all duration-700 transform ${isRevealed
+                        ? 'bg-green-500/20 border-green-400/30 scale-105 shadow-lg animate-pulse'
+                        : 'bg-white/5 border-white/20 hover:bg-white/10'
+                        }`}
                     >
                       <div className="flex justify-between items-center">
                         <div className="flex items-center space-x-3">
-                          <span className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl transition-all duration-500 ${
-                            isRevealed 
-                              ? 'bg-green-500 text-white' 
-                              : 'bg-yellow-500 text-black'
-                          }`}>
+                          <span className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl transition-all duration-500 ${isRevealed
+                            ? 'bg-green-500 text-white'
+                            : 'bg-yellow-500 text-black'
+                            }`}>
                             {index + 1}
                           </span>
                           <span className="text-white font-medium text-lg">
                             {isRevealed ? answer?.text : 'Hidden Answer'}
                           </span>
                         </div>
-                        <span className={`font-bold text-3xl transition-all duration-500 ${
-                          isRevealed ? 'text-green-400' : 'text-yellow-400'
-                        }`}>
+                        <span className={`font-bold text-3xl transition-all duration-500 ${isRevealed ? 'text-green-400' : 'text-yellow-400'
+                          }`}>
                           {isRevealed ? answer?.points : '?'}
                         </span>
                       </div>
-                      
+
                       {!answer && (
                         <div className="text-center text-gray-500 text-sm mt-4">
                           No answer available
                         </div>
                       )}
-                      
+
                       {isRevealed && (
                         <div className="text-center text-green-400 text-xs mt-2 animate-bounce">
                           ✨ Revealed by Host
@@ -558,7 +617,7 @@ export default function GameIntegration() {
           {/* Teams Display */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             {currentGame.teams?.map((team, index) => (
-              <div key={team.teamId || index} className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6">
+              <div key={team._id?.toString() || team.teamId?.toString() || index} className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6">
                 <h3 className="text-2xl font-bold text-white mb-2">
                   {team.name || `Team ${index + 1}`}
                 </h3>
@@ -615,7 +674,7 @@ export default function GameIntegration() {
         <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 text-center max-w-2xl">
           <h1 className="text-4xl font-bold text-white mb-4">🎉 Game Completed!</h1>
           <p className="text-gray-300 mb-6">All 9 questions across 3 rounds finished. Check the leaderboard for final results.</p>
-          
+
           <div className="space-x-4">
             <button
               onClick={() => {
@@ -626,7 +685,7 @@ export default function GameIntegration() {
             >
               Start New Game
             </button>
-            
+
             <a
               href="/leaderboard"
               className="inline-block py-3 px-6 bg-gradient-to-r from-yellow-500 to-orange-600 text-white font-bold rounded-lg hover:from-yellow-600 hover:to-orange-700 transition-all duration-300"

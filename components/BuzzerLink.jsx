@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 
 export default function BuzzerLink({ gameId = "default-game", className = "" }) {
   const [origin, setOrigin] = useState('');
-  const buzzerUrl = `/buzzer?gameId=${gameId}`;
+  const buzzerUrl = `/buzzer?gameCode=${gameId}`;
   
   useEffect(() => {
     // Set origin on client side to avoid hydration mismatch
@@ -15,8 +15,13 @@ export default function BuzzerLink({ gameId = "default-game", className = "" }) 
       <h3 className="text-2xl font-bold text-white mb-4">Player Buzzer Access</h3>
       
       <div className="space-y-4">
+        <div className="text-center mb-4">
+          <div className="text-sm text-gray-400 mb-2">Game Code</div>
+          <div className="text-4xl font-bold text-yellow-400 tracking-wider">{gameId}</div>
+        </div>
+        
         <p className="text-gray-300">
-          Share this link with players to join the buzzer system:
+          Share this link or game code with players to join the buzzer system:
         </p>
         
         <div className="bg-white/5 border border-white/10 rounded-lg p-3">
@@ -47,7 +52,7 @@ export default function BuzzerLink({ gameId = "default-game", className = "" }) 
         </div>
         
         <div className="text-xs text-gray-400">
-          <p>• Players can join with their name and team</p>
+          <p>• Players enter game code: <strong className="text-yellow-400">{gameId}</strong></p>
           <p>• Real-time buzzer competition</p>
           <p>• Keyboard and touch support</p>
         </div>

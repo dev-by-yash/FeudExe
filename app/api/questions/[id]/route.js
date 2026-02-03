@@ -5,7 +5,8 @@ import Question from '../../../../models/Question';
 export async function GET(request, { params }) {
   try {
     await connectDB();
-    const question = await Question.findById(params.id);
+    const { id } = await params;
+    const question = await Question.findById(id);
     
     if (!question) {
       return NextResponse.json(
@@ -26,10 +27,11 @@ export async function GET(request, { params }) {
 export async function PUT(request, { params }) {
   try {
     await connectDB();
+    const { id } = await params;
     const updates = await request.json();
     
     const question = await Question.findByIdAndUpdate(
-      params.id,
+      id,
       { ...updates, updatedAt: Date.now() },
       { new: true, runValidators: true }
     );
@@ -53,7 +55,8 @@ export async function PUT(request, { params }) {
 export async function DELETE(request, { params }) {
   try {
     await connectDB();
-    const question = await Question.findByIdAndDelete(params.id);
+    const { id } = await params;
+    const question = await Question.findByIdAndDelete(id);
     
     if (!question) {
       return NextResponse.json(

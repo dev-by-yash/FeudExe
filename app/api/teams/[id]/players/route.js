@@ -5,8 +5,9 @@ import mongoose from 'mongoose';
 
 export async function POST(request, { params }) {
   try {
+    const { id } = await params;
     console.log('=== ADD PLAYER API CALLED ===');
-    console.log('Team ID from params:', params.id);
+    console.log('Team ID from params:', id);
     
     await connectDB();
     console.log('Database connected successfully');
@@ -22,7 +23,7 @@ export async function POST(request, { params }) {
       );
     }
 
-    if (!params.id) {
+    if (!id) {
       console.log('Error: Team ID is required');
       return NextResponse.json(
         { success: false, error: 'Team ID is required' },
@@ -31,16 +32,16 @@ export async function POST(request, { params }) {
     }
 
     // Validate ObjectId format
-    if (!mongoose.Types.ObjectId.isValid(params.id)) {
-      console.log('Error: Invalid team ID format:', params.id);
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      console.log('Error: Invalid team ID format:', id);
       return NextResponse.json(
         { success: false, error: 'Invalid team ID format' },
         { status: 400 }
       );
     }
 
-    console.log('Searching for team with ID:', params.id);
-    const team = await Team.findById(params.id);
+    console.log('Searching for team with ID:', id);
+    const team = await Team.findById(id);
     console.log('Team found:', team ? `${team.name} (${team._id})` : 'null');
     
     if (!team) {
@@ -92,6 +93,7 @@ export async function POST(request, { params }) {
 export async function DELETE(request, { params }) {
   try {
     await connectDB();
+    const { id } = await params;
     const { searchParams } = new URL(request.url);
     const playerName = searchParams.get('name');
 
@@ -102,7 +104,7 @@ export async function DELETE(request, { params }) {
       );
     }
 
-    const team = await Team.findById(params.id);
+    const team = await Team.findById(id);
     if (!team) {
       return NextResponse.json(
         { success: false, error: 'Team not found' },

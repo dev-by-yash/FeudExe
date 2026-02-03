@@ -5,10 +5,13 @@ import Game from '../../../../models/Game';
 export async function GET(request, { params }) {
   try {
     await connectDB();
-    const game = await Game.findById(params.id)
-      .populate('teams.teamId', 'name players')
-      .populate('currentQuestion')
-      .populate('winner', 'name');
+    const { id } = await params; // Await params in Next.js 15+
+    console.log('📍 GET /api/games/[id] - Requested ID:', id);
+    
+    // Don't populate - just get the game with embedded team data
+    const game = await Game.findById(id);
+    
+    console.log('📍 Game found:', game ? `YES (${game._id})` : 'NO');
     
     if (!game) {
       return NextResponse.json(
@@ -19,6 +22,8 @@ export async function GET(request, { params }) {
 
     return NextResponse.json({ success: true, game });
   } catch (error) {
+    console.error('❌ GET /api/games/[id] ERROR:', error.message);
+    console.error('❌ Stack:', error.stack);
     return NextResponse.json(
       { success: false, error: error.message },
       { status: 500 }
@@ -29,10 +34,11 @@ export async function GET(request, { params }) {
 export async function PUT(request, { params }) {
   try {
     await connectDB();
+    const { id } = await params; // Await params in Next.js 15+
     const updates = await request.json();
     
     const game = await Game.findByIdAndUpdate(
-      params.id,
+      id,
       { ...updates, updatedAt: Date.now() },
       { new: true, runValidators: true }
     ).populate('teams.teamId', 'name')
@@ -58,7 +64,8 @@ export async function PUT(request, { params }) {
 export async function DELETE(request, { params }) {
   try {
     await connectDB();
-    const game = await Game.findByIdAndDelete(params.id);
+    const { id } = await params; // Await params in Next.js 15+
+    const game = await Game.findByIdAndDelete(id);
     
     if (!game) {
       return NextResponse.json(

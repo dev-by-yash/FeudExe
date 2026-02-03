@@ -1,7 +1,7 @@
 import styles from "./leaderboard.module.css";
 import RankBadge from "./RankBadge";
 
-export default function LeaderboardRow({ rank, team, score }) {
+export default function LeaderboardRow({ rank, team, score, gamesPlayed = 0, gamesWon = 0, winRate = 0 }) {
   const variants = {
     1: styles.first,
     2: styles.second,
@@ -20,7 +20,17 @@ export default function LeaderboardRow({ rank, team, score }) {
       </div>
 
       <div className={styles.team}>{team}</div>
-      <div className={styles.score}>{score}</div>
+      <div className={styles.score}>{typeof score === 'number' ? score.toLocaleString() : score}</div>
+
+      {/* Additional Stats */}
+      <div className={styles.stats}>
+        <span className="text-gray-400 text-sm">{gamesPlayed} games</span>
+        <span className="text-gray-400 text-sm mx-2">•</span>
+        <span className="text-green-400 text-sm">{gamesWon} wins</span>
+        <span className="text-gray-400 text-sm mx-2">•</span>
+        <span className="text-blue-400 text-sm">{winRate}% WR</span>
+      </div>
     </div>
   );
 }
+

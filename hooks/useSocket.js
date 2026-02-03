@@ -9,6 +9,7 @@ export const useSocket = (gameId) => {
   const [answerRevealed, setAnswerRevealed] = useState(null);
   const [timerUpdate, setTimerUpdate] = useState(null);
   const [strikeAdded, setStrikeAdded] = useState(null);
+  const [teamJoined, setTeamJoined] = useState(null);
 
   useEffect(() => {
     // Initialize socket connection
@@ -20,9 +21,10 @@ export const useSocket = (gameId) => {
     socket.on('connect', () => {
       setIsConnected(true);
       console.log('Connected to server');
-      
+
       // Join game room if gameId is provided
       if (gameId) {
+        console.log(`📡 useSocket: Joining game room: ${gameId}`);
         socket.emit('join-game', gameId);
       }
     });
@@ -56,6 +58,11 @@ export const useSocket = (gameId) => {
     socket.on('strike-added', (data) => {
       setStrikeAdded(data);
       console.log('Strike added:', data);
+    });
+
+    socket.on('team-joined-success', (data) => {
+      setTeamJoined(data);
+      console.log('Team joined:', data);
     });
 
     // Cleanup on unmount
@@ -133,25 +140,42 @@ export const useSocket = (gameId) => {
     }
   };
 
+  // Buzzer control functions - emit proper events that buzzer pages listen for
+  const emitBuzzerReady = () => {
+    if (socketRef.current && gameId) {
+      console.log('🔔 Emitting buzzer-ready for game:', gameId);
+      socketRef.current.emit('buzzer-ready', gameId);
+    }
+  };
+
+  const emitBuzzerReset = () => {
+    if (socketRef.current && gameId) {
+      console.log('🔄 Emitting buzzer-reset for game:', gameId);
+      socketRef.current.emit('buzzer-reset', gameId);
+    }
+  };
+
   // Clear event states
   const clearBuzzerPressed = () => setBuzzerPressed(null);
   const clearGameState = () => setGameState(null);
   const clearAnswerRevealed = () => setAnswerRevealed(null);
   const clearTimerUpdate = () => setTimerUpdate(null);
   const clearStrikeAdded = () => setStrikeAdded(null);
+  const clearTeamJoined = () => setTeamJoined(null);
 
   return {
     // Connection state
     isConnected,
     socket: socketRef.current,
-    
+
     // Event data
     buzzerPressed,
     gameState,
     answerRevealed,
     timerUpdate,
     strikeAdded,
-    
+    teamJoined,
+
     // Actions
     joinGame,
     leaveGame,
@@ -160,13 +184,16 @@ export const useSocket = (gameId) => {
     revealAnswer,
     updateTimer,
     addStrike,
-    
+    emitBuzzerReady,
+    emitBuzzerReset,
+
     // Clear functions
     clearBuzzerPressed,
     clearGameState,
     clearAnswerRevealed,
     clearTimerUpdate,
     clearStrikeAdded,
+    clearTeamJoined,
   };
 };
 
@@ -181,11 +208,11 @@ export const useBuzzer = (gameId, teamId, playerId, playerName) => {
     if (!canBuzz || !isConnected) return null;
 
     const result = pressBuzzer(teamId, playerId, playerName);
-    
+
     if (result) {
       setCanBuzz(false);
       setBuzzCooldown(3); // 3 second cooldown
-      
+
       // Start cooldown timer
       const timer = setInterval(() => {
         setBuzzCooldown((prev) => {
@@ -198,7 +225,7 @@ export const useBuzzer = (gameId, teamId, playerId, playerName) => {
         });
       }, 1000);
     }
-    
+
     return result;
   };
 
@@ -228,19 +255,19 @@ export const useBuzzer = (gameId, teamId, playerId, playerName) => {
 // Custom hook for game control (host/moderator)
 export const useGameControl = (gameId) => {
   const socket = useSocket(gameId);
-  
+
   // Numpad key handler for answer reveals
   useEffect(() => {
     const handleKeyPress = (event) => {
       const key = event.key;
-      
+
       // Handle numpad 1-9 for answer reveals
       if (key >= '1' && key <= '9') {
         const answerIndex = parseInt(key) - 1;
         // This would be connected to your game state to reveal the answer
         console.log(`Reveal answer ${answerIndex + 1}`);
       }
-      
+
       // Handle 'X' key for wrong answer
       if (key.toLowerCase() === 'x') {
         console.log('Wrong answer - add strike');

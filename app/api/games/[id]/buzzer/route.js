@@ -5,9 +5,10 @@ import Game from '../../../../../models/Game';
 export async function POST(request, { params }) {
   try {
     await connectDB();
+    const { id } = await params;
     const { teamId, playerId } = await request.json();
 
-    const game = await Game.findById(params.id);
+    const game = await Game.findById(id);
     if (!game) {
       return NextResponse.json(
         { success: false, error: 'Game not found' },

@@ -7,9 +7,10 @@ import Team from '../../../../../models/Team';
 export async function POST(request, { params }) {
   try {
     await connectDB();
+    const { id } = await params;
     const { answerIndex, isCorrect } = await request.json();
 
-    const game = await Game.findById(params.id)
+    const game = await Game.findById(id)
       .populate('currentQuestion')
       .populate('teams.teamId');
 

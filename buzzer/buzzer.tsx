@@ -2,13 +2,18 @@
 
 import { useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
+import { useSearchParams } from "next/navigation";
 
 interface BuzzerProps {
-  gameId?: string;
+  gameCode?: string;
   serverUrl?: string;
 }
 
-export default function Buzzer({ gameId = "default-game", serverUrl }: BuzzerProps) {
+export default function Buzzer({ gameCode: propGameCode, serverUrl }: BuzzerProps) {
+  const searchParams = useSearchParams();
+  const urlGameCode = searchParams?.get('gameCode');
+  const gameCode = propGameCode || urlGameCode || "default-game";
+  
   const [socket, setSocket] = useState<Socket | null>(null);
   const [nameInput, setNameInput] = useState("");
   const [team, setTeam] = useState<string | null>(null);
@@ -17,37 +22,52 @@ export default function Buzzer({ gameId = "default-game", serverUrl }: BuzzerPro
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
+    // Only initialize socket once
+    if (socket) {
+      console.log('⚠️ Socket already exists, skipping initialization');
+      return;
+    }
+    
     const socketUrl = serverUrl || process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000';
+    console.log('🔌 Initializing socket connection to:', socketUrl);
+    console.log('🎮 Game Code:', gameCode);
+    
     const newSocket = io(socketUrl, {
       transports: ["websocket", "polling"],
     });
 
     setSocket(newSocket);
+    console.log('📡 Socket instance created');
 
     newSocket.on("connect", () => {
       setIsConnected(true);
-      console.log("Connected to server");
-      if (gameId) {
-        newSocket.emit("join-game", gameId);
-      }
+      console.log("✅ Connected to server with socket:", newSocket.id);
     });
 
     newSocket.on("disconnect", () => {
       setIsConnected(false);
-      console.log("Disconnected from server");
+      console.log("❌ Disconnected from server");
     });
 
     newSocket.on("buzzer-ready", () => {
+      console.log("🔔 Received buzzer-ready event!");
       setReady(true);
       setMessage("BUZZ NOW!");
     });
 
+    newSocket.on("buzzer-reset", () => {
+      console.log("🔄 Received buzzer-reset event!");
+      setReady(false);
+      setMessage("Waiting for host...");
+    });
+
     newSocket.on("buzz-winner", (winner: string) => {
+      console.log("🏆 Received buzz-winner event:", winner);
       setReady(false);
       setMessage(
         winner === team ? "🎉 YOU BUZZED FIRST! 🎉" : `❌ ${winner} buzzed first!`
       );
-      
+
       // Reset after 3 seconds
       setTimeout(() => {
         setMessage("Waiting for host...");
@@ -55,28 +75,78 @@ export default function Buzzer({ gameId = "default-game", serverUrl }: BuzzerPro
     });
 
     newSocket.on("buzzer-pressed", (data: any) => {
+      console.log("🔔 Received buzzer-pressed event:", data);
       if (data.teamId !== team) {
         setReady(false);
         setMessage(`❌ ${data.playerName} buzzed first!`);
       }
     });
 
+    // Fallback: Also handle game-state-updated for buzzer events
+    newSocket.on("game-state-updated", (data: any) => {
+      console.log("📡 Received game-state-updated:", data);
+      if (data.buzzerEnabled === true || data.buzzerState === 'ready') {
+        setReady(true);
+        setMessage("BUZZ NOW!");
+      } else if (data.buzzerState === 'disabled' || data.buzzerReset === true) {
+        setReady(false);
+        setMessage("Waiting for host...");
+      }
+    });
+
+    console.log('✅ Socket event listeners registered');
+
     return () => {
-      newSocket.disconnect();
+      console.log('🔌 Cleaning up socket connection');
+      if (newSocket) {
+        newSocket.disconnect();
+      }
     };
-  }, [gameId, serverUrl, team]);
+  }, []); // Empty array - only run once
+
+  // Separate effect for joining game room
+  useEffect(() => {
+    if (socket && gameCode && socket.connected) {
+      console.log(`📡 Joining game room: ${gameCode}`);
+      socket.emit("join-game", gameCode);
+      
+      return () => {
+        console.log(`📤 Leaving game room: ${gameCode}`);
+        socket.emit("leave-game", gameCode);
+      };
+    } else {
+      console.log('⏳ Waiting for socket connection...', {
+        hasSocket: !!socket,
+        gameCode,
+        isConnected: socket?.connected
+      });
+    }
+  }, [socket, gameCode]);
+
+  // Notify server when team joins
+  useEffect(() => {
+    if (socket && gameCode && team && socket.connected) {
+      console.log(`👥 Team "${team}" joining game ${gameCode}`);
+      socket.emit("team-joined", {
+        gameCode,
+        teamName: team,
+        timestamp: Date.now()
+      });
+    }
+  }, [socket, gameCode, team]);
 
   const buzz = () => {
     if (!ready || !socket || !team) return;
-    
+
     const buzzerData = {
-      gameId,
+      gameCode,
       teamId: team,
       playerId: `player_${Date.now()}`,
-      playerName: nameInput,
+      playerName: team,
       timestamp: Date.now()
     };
 
+    console.log('🔔 Buzzing with data:', buzzerData);
     socket.emit("buzzer-press", buzzerData);
     setReady(false);
     setMessage("Buzzed! Waiting for results...");
@@ -103,7 +173,12 @@ export default function Buzzer({ gameId = "default-game", serverUrl }: BuzzerPro
           <h2 className="text-3xl font-bold text-white text-center mb-8">
             Join Buzzer System
           </h2>
-          
+
+          <div className="mb-6 text-center">
+            <div className="text-sm text-gray-400 mb-2">Game Code</div>
+            <div className="text-2xl font-bold text-yellow-400">{gameCode}</div>
+          </div>
+
           <div className="space-y-6">
             <div>
               <label className="block text-gray-300 text-sm font-medium mb-2">
@@ -140,15 +215,16 @@ export default function Buzzer({ gameId = "default-game", serverUrl }: BuzzerPro
   /* 🔹 STEP 2: BUZZER SCREEN */
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex flex-col items-center justify-center p-8 relative overflow-hidden">
-      
+
       {/* Background Effects */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900/20 via-transparent to-transparent"></div>
-      
+
       {/* Team Info */}
       <div className="relative z-10 text-center mb-8">
         <h1 className="text-4xl font-bold text-white mb-2">
           {team}
         </h1>
+        <p className="text-sm text-gray-400">Game: {gameCode}</p>
         <p className="text-sm text-gray-400 mt-2">
           {isConnected ? '🟢 Connected' : '🔴 Disconnected'}
         </p>

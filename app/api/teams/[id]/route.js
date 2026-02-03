@@ -5,7 +5,8 @@ import Team from '../../../../models/Team';
 export async function GET(request, { params }) {
   try {
     await connectDB();
-    const team = await Team.findById(params.id);
+    const { id } = await params;
+    const team = await Team.findById(id);
     
     if (!team) {
       return NextResponse.json(
@@ -26,10 +27,11 @@ export async function GET(request, { params }) {
 export async function PUT(request, { params }) {
   try {
     await connectDB();
+    const { id } = await params;
     const updates = await request.json();
     
     const team = await Team.findByIdAndUpdate(
-      params.id,
+      id,
       { ...updates, updatedAt: Date.now() },
       { new: true, runValidators: true }
     );
@@ -53,7 +55,8 @@ export async function PUT(request, { params }) {
 export async function DELETE(request, { params }) {
   try {
     await connectDB();
-    const team = await Team.findByIdAndDelete(params.id);
+    const { id } = await params;
+    const team = await Team.findByIdAndDelete(id);
     
     if (!team) {
       return NextResponse.json(
