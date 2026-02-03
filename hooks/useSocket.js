@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { io } from 'socket.io-client';
 
-export const useSocket = (gameId) => {
+export const useSocket = (gameIdOrCode) => {
   const socketRef = useRef(null);
   const [isConnected, setIsConnected] = useState(false);
   const [buzzerPressed, setBuzzerPressed] = useState(null);
@@ -22,10 +22,10 @@ export const useSocket = (gameId) => {
       setIsConnected(true);
       console.log('Connected to server');
 
-      // Join game room if gameId is provided
-      if (gameId) {
-        console.log(`📡 useSocket: Joining game room: ${gameId}`);
-        socket.emit('join-game', gameId);
+      // Join game room if gameIdOrCode is provided
+      if (gameIdOrCode) {
+        console.log(`📡 useSocket: Joining game room: ${gameIdOrCode}`);
+        socket.emit('join-game', gameIdOrCode);
       }
     });
 
@@ -67,12 +67,12 @@ export const useSocket = (gameId) => {
 
     // Cleanup on unmount
     return () => {
-      if (gameId) {
-        socket.emit('leave-game', gameId);
+      if (gameIdOrCode) {
+        socket.emit('leave-game', gameIdOrCode);
       }
       socket.disconnect();
     };
-  }, [gameId]);
+  }, [gameIdOrCode]);
 
   // Socket action functions
   const joinGame = (newGameId) => {
@@ -88,9 +88,10 @@ export const useSocket = (gameId) => {
   };
 
   const pressBuzzer = (teamId, playerId, playerName) => {
-    if (socketRef.current && gameId) {
+    if (socketRef.current && gameIdOrCode) {
       const buzzerData = {
-        gameId,
+        gameId: gameIdOrCode,
+        gameCode: gameIdOrCode,
         teamId,
         playerId,
         playerName,
@@ -103,9 +104,10 @@ export const useSocket = (gameId) => {
   };
 
   const updateGameState = (gameStateData) => {
-    if (socketRef.current && gameId) {
+    if (socketRef.current && gameIdOrCode) {
       socketRef.current.emit('game-update', {
-        gameId,
+        gameId: gameIdOrCode,
+        gameCode: gameIdOrCode,
         ...gameStateData
       });
     }
@@ -115,15 +117,17 @@ export const useSocket = (gameId) => {
     if (socketRef.current && gameIdParam) {
       socketRef.current.emit('reveal-answer', {
         gameId: gameIdParam,
+        gameCode: gameIdParam,
         ...answerData
       });
     }
   };
 
   const updateTimer = (timeRemaining, isActive) => {
-    if (socketRef.current && gameId) {
+    if (socketRef.current && gameIdOrCode) {
       socketRef.current.emit('timer-update', {
-        gameId,
+        gameId: gameIdOrCode,
+        gameCode: gameIdOrCode,
         timeRemaining,
         isActive
       });
@@ -131,9 +135,10 @@ export const useSocket = (gameId) => {
   };
 
   const addStrike = (teamId, strikes) => {
-    if (socketRef.current && gameId) {
+    if (socketRef.current && gameIdOrCode) {
       socketRef.current.emit('add-strike', {
-        gameId,
+        gameId: gameIdOrCode,
+        gameCode: gameIdOrCode,
         teamId,
         strikes
       });
@@ -142,16 +147,16 @@ export const useSocket = (gameId) => {
 
   // Buzzer control functions - emit proper events that buzzer pages listen for
   const emitBuzzerReady = () => {
-    if (socketRef.current && gameId) {
-      console.log('🔔 Emitting buzzer-ready for game:', gameId);
-      socketRef.current.emit('buzzer-ready', gameId);
+    if (socketRef.current && gameIdOrCode) {
+      console.log('🔔 Emitting buzzer-ready for game:', gameIdOrCode);
+      socketRef.current.emit('buzzer-ready', gameIdOrCode);
     }
   };
 
   const emitBuzzerReset = () => {
-    if (socketRef.current && gameId) {
-      console.log('🔄 Emitting buzzer-reset for game:', gameId);
-      socketRef.current.emit('buzzer-reset', gameId);
+    if (socketRef.current && gameIdOrCode) {
+      console.log('🔄 Emitting buzzer-reset for game:', gameIdOrCode);
+      socketRef.current.emit('buzzer-reset', gameIdOrCode);
     }
   };
 

@@ -14,6 +14,10 @@ export default function Buzzer({ gameCode: propGameCode, serverUrl }: BuzzerProp
   const urlGameCode = searchParams?.get('gameCode');
   const gameCode = propGameCode || urlGameCode || "default-game";
   
+  console.log('🎮 Buzzer Component - Game Code:', gameCode);
+  console.log('   - From props:', propGameCode);
+  console.log('   - From URL:', urlGameCode);
+  
   const [socket, setSocket] = useState<Socket | null>(null);
   const [nameInput, setNameInput] = useState("");
   const [team, setTeam] = useState<string | null>(null);
@@ -51,6 +55,8 @@ export default function Buzzer({ gameCode: propGameCode, serverUrl }: BuzzerProp
 
     newSocket.on("buzzer-ready", () => {
       console.log("🔔 Received buzzer-ready event!");
+      console.log("   Current gameCode:", gameCode);
+      console.log("   Setting ready to true");
       setReady(true);
       setMessage("BUZZ NOW!");
     });
@@ -104,9 +110,16 @@ export default function Buzzer({ gameCode: propGameCode, serverUrl }: BuzzerProp
     };
   }, []); // Empty array - only run once
 
-  // Separate effect for joining game room
+  // Separate effect for joining game room - runs when socket connects
   useEffect(() => {
-    if (socket && gameCode && socket.connected) {
+    console.log('🔍 Join room effect triggered:', {
+      hasSocket: !!socket,
+      gameCode,
+      isConnected,
+      socketConnected: socket?.connected
+    });
+    
+    if (socket && gameCode && isConnected) {
       console.log(`📡 Joining game room: ${gameCode}`);
       socket.emit("join-game", gameCode);
       
@@ -118,10 +131,10 @@ export default function Buzzer({ gameCode: propGameCode, serverUrl }: BuzzerProp
       console.log('⏳ Waiting for socket connection...', {
         hasSocket: !!socket,
         gameCode,
-        isConnected: socket?.connected
+        isConnected: isConnected
       });
     }
-  }, [socket, gameCode]);
+  }, [socket, gameCode, isConnected]); // Added isConnected to dependencies
 
   // Notify server when team joins
   useEffect(() => {
